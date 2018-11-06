@@ -1,5 +1,5 @@
-package com.bigsea.sns.web.controller.test;
-import com.bigsea.sns.model.test.Demo;
+package com.bigsea.sns.web.controller;
+import com.bigsea.sns.model.Demo;
 import com.bigsea.sns.service.test.DemoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

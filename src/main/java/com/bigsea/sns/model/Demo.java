@@ -1,4 +1,4 @@
-package com.bigsea.sns.model.test;
+package com.bigsea.sns.model;
 
 import javax.persistence.*;
 

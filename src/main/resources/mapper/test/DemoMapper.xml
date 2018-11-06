@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bigsea.sns.dao.mapper.test.DemoMapper">
-  <resultMap id="BaseResultMap" type="com.bigsea.sns.model.test.Demo">
+  <resultMap id="BaseResultMap" type="com.bigsea.sns.model.Demo">
     <!--
       WARNING - @mbg.generated
     -->
