@@ -17,7 +17,6 @@ import freemarker.template.Configuration;
  */
 public class ControllerGenerator extends CodeGeneratorManager implements CodeGenerator {
 
-	@Override
 	public void genCode(String tableName, String modelName, String sign) {
 		Configuration cfg = getFreemarkerConfiguration();
 		String customMapping = "/" + sign + "/";
@@ -25,7 +24,8 @@ public class ControllerGenerator extends CodeGeneratorManager implements CodeGen
 		
 		Map<String, Object> data = getDataMapInit(tableName, modelName, sign, modelNameUpperCamel); 
 		try {
-			File controllerFile = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_CONTROLLER+ customMapping
+			// 包名
+			File controllerFile = new File(PROJECT_PATH + JAVA_PATH+"/" + PACKAGE_PATH_CONTROLLER+ customMapping
 						 + modelNameUpperCamel + "Controller.java");
 	        if (!controllerFile.getParentFile().exists()) {
 	        	controllerFile.getParentFile().mkdirs();
@@ -46,7 +46,7 @@ public class ControllerGenerator extends CodeGeneratorManager implements CodeGen
 	 * @return
 	 */
 	private Map<String, Object> getDataMapInit(String tableName, String modelName, String sign, String modelNameUpperCamel) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("date", DATE);
         data.put("author", AUTHOR);
         data.put("sign", sign);

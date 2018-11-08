@@ -34,9 +34,9 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
 	protected static final Logger logger = LoggerFactory.getLogger(CodeGeneratorManager.class);
 	
 	private static Configuration configuration = null;
-	
+
+	// 初始化配置信息
 	static {
-		// 初始化配置信息
 		init();
 	}
 	
@@ -71,6 +71,7 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
         
         SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
         sqlMapGeneratorConfiguration.setTargetProject(PROJECT_PATH + RESOURCES_PATH);
+        // TODO  生成Mapper 的地方
         sqlMapGeneratorConfiguration.setTargetPackage("mapper." + sign);
         context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
         
@@ -155,10 +156,12 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
 	/**
 	 * 获取表的区分字段
 	 * @param tableName 表名, eg: gen_test_demo
-	 * @return 区分字段 eg: test
+	 * @return 区分字段 eg: gen
 	 */
 	protected String getSign(String tableName) {
-		return getTableNameSplit(tableName)[1];
+		//TODO by wuchao
+		return getTableNameSplit(tableName)[0];
+		//return "";
 	}
 	
 	/**
@@ -169,7 +172,7 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
 	protected String getDefModelName(String tableName) {
 		String[] strs = getTableNameSplit(tableName);
 		StringBuilder sb = new StringBuilder();
-		for (int i = 2; i < strs.length; i++) {
+		for (int i = 0; i < strs.length; i++) {
 			sb.append(StringUtils.toUpperCaseFirstOne(strs[i].toLowerCase()));
 		}
 		return sb.toString();
@@ -182,7 +185,7 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
 	 */
 	private String[] getTableNameSplit(String tableName) {
 		String[] strs = tableName.split("_");
-		if (!tableName.contains("_") || strs.length < 3) {
+		if (!tableName.contains("_")) {
 			throw new RuntimeException("表名格式不正确, 请按规定格式! 例如: gen_test_demo");
 		}
 		return strs;
@@ -257,20 +260,38 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
 	private static String packageConvertPath(String packageName) {
 		return String.format("/%s/", packageName.contains(".") ? packageName.replaceAll("\\.", "/") : packageName);
 	}
-	
+
+	/**
+	 * 加载配置文件 | 读取配置文件
+	 * @return
+	 */
+	private static Properties loadProperties() {
+		Properties prop = null;
+		try {
+			prop = new Properties();
+			InputStream in = CodeGeneratorManager.class.getClassLoader().getResourceAsStream("generatorConfig.properties");
+			prop.load(in);
+		} catch (Exception e) {
+			throw new RuntimeException("加载配置文件异常!", e);
+		}
+		return prop;
+	}
+
 	/**
 	 * 初始化配置信息
 	 */
 	private static void init() {
+		// 读取配置文件
 		Properties prop = loadProperties();
-		
+		// 1. 数据库配置信息 URL USERNAME  PASSWORD DRIVER_CLASS
 		JDBC_URL = prop.getProperty("jdbc.url");
 		JDBC_USERNAME = prop.getProperty("jdbc.username");
 		JDBC_PASSWORD = prop.getProperty("jdbc.password");
 		JDBC_DRIVER_CLASS_NAME = prop.getProperty("jdbc.driver.class.name");
-		
+		// 2. 文件路径    Java代码路径    properties文件路径
 		JAVA_PATH = prop.getProperty("java.path");
 		RESOURCES_PATH = prop.getProperty("resources.path");
+		// 项目在硬盘上的基础路径 PROJECT_PATH
 		TEMPLATE_FILE_PATH = PROJECT_PATH + prop.getProperty("template.file.path");
 		
 		BASE_PACKAGE = prop.getProperty("base.package");
@@ -297,20 +318,6 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
 		DATE = new SimpleDateFormat(dateFormat).format(new Date());
 	}
 	
-	/**
-	 * 加载配置文件
-	 * @return
-	 */
-	private static Properties loadProperties() {
-		Properties prop = null;
-		try {
-			prop = new Properties();
-			InputStream in = CodeGeneratorManager.class.getClassLoader().getResourceAsStream("generatorConfig.properties");
-			prop.load(in);
-		} catch (Exception e) {
-			throw new RuntimeException("加载配置文件异常!", e);
-		}
-		return prop;
-	}
+
 	
 }

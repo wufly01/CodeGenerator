@@ -7,11 +7,12 @@ import com.codegen.service.CodeGeneratorManager;
  * Created by zhh on 2017/09/20.
  */
 public class CodeGeneratorMain {
-	
-	private static final String TABLE = "gen_test_demo";
+
+    // 1. 需要生成的表名称
+	private static final String TABLE = "article_push";
 	
 	private static final String MODEL_NAME = "ITest";
-	
+	// 2. 可以设置多张表
 	private static final String[] TABLES = {
 			"gen_test_demo", "gen_test_demo1"
 	};
@@ -29,6 +30,7 @@ public class CodeGeneratorMain {
 	 * 		genCodeWithCustomName("gen_test_demo", "IDemo");
 	 */
 	public static void main(String[] args) {
+	    //代码生成器基础项 (常量信息 & 通用方法)
 		CodeGeneratorManager cgm = new CodeGeneratorManager();
 		
 		cgm.genCodeWithSimpleName(TABLE);

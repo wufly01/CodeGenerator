@@ -1,4 +1,4 @@
-package ${basePackage}.web.controller.${sign};
+package ${basePackage}.controller.${sign};
 import ${basePackage}.model.${sign}.${modelNameUpperCamel};
 import ${basePackage}.service.${sign}.${modelNameUpperCamel}Service;
 import com.github.pagehelper.PageHelper;

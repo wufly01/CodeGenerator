@@ -22,7 +22,6 @@ import com.codegen.util.StringUtils;
  */
 public class ModelAndMapperGenerator extends CodeGeneratorManager implements CodeGenerator {
 
-	@Override
 	public void genCode(String tableName, String modelName, String sign) {
 		Context initConfig = initConfig(tableName, modelName, sign);
 		List<String> warnings = null;
@@ -65,7 +64,8 @@ public class ModelAndMapperGenerator extends CodeGeneratorManager implements Cod
 			context = initMybatisGeneratorContext(sign);
 			JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
 	        javaModelGeneratorConfiguration.setTargetProject(PROJECT_PATH + JAVA_PATH);
-	        javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE + "." + sign);
+	        //javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE + "." + sign);
+			javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE + "." + sign);
 	        context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
 	        
 	        JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
